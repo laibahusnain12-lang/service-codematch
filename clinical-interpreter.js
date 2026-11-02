@@ -27,7 +27,8 @@ function ciExpandAbbreviations(value) {
     [/\bcbc\b/g, 'complete blood count'],
     [/\bua\b/g, 'urinalysis'],
     [/\bctpa\b/g, 'computed tomography pulmonary angiography'],
-    [/\bmra\b/g, 'magnetic resonance angiography']
+    [/\bmra\b/g, 'magnetic resonance angiography'],
+    [/\becho\b/g, 'echocardiography']
   ];
   for (const [pattern, replacement] of replacements) text = text.replace(pattern, replacement);
   return text;
@@ -43,12 +44,13 @@ const CI_MODALITY_TERMS = [
   ['laboratory', ['lab','laboratory','blood test','urine test','serology','biochemistry','pathology']],
   ['electrocardiogram', ['ecg','ekg','electrocardiogram','electrocardiograph']],
   ['endoscopy', ['endoscopy','colonoscopy','gastroscopy','bronchoscopy','cystoscopy']],
+  ['echocardiography', ['echocardiography','echo','echo cardiography']],
   ['biopsy', ['biopsy','fnac','fine needle aspiration']],
   ['laser', ['laser','laser therapy','laser treatment']],
   ['wax', ['wax','waxing','wax therapy']]
 ];
 const CI_SPECIMEN_TERMS = ['blood','serum','plasma','urine','stool','sputum','swab','tissue','csf','saliva','bone marrow'];
-const CI_METHOD_TERMS = ['culture','pcr','elisa','microscopy','histopathology','cytology','immunoassay','chromatography','spectrometry','electrophoresis'];
+const CI_METHOD_TERMS = ['culture','pcr','elisa','microscopy','histopathology','cytology','immunoassay','chromatography','spectrometry','electrophoresis','routine','routine examination'];
 const CI_POPULATION_TERMS = ['pediatric','paediatric','child','adult','pregnant','pregnancy','neonatal','geriatric'];
 const CI_PURPOSE_TERMS = [
   ['screening', ['screening','screen']],
@@ -81,6 +83,10 @@ function ciCriticalAttributesFor(input, candidate) {
   if (input.population || candidate.population) critical.add('population');
   if (input.purpose && candidate.purpose) critical.add('purpose');
   if ((input.components && input.components.length) || (candidate.components && candidate.components.length)) critical.add('components');
+  if (input.category && candidate.category) critical.add('category');
+  if (input.duration || candidate.duration) critical.add('duration');
+  if ((input.technicalSpecs && input.technicalSpecs.length) || (candidate.technicalSpecs && candidate.technicalSpecs.length)) critical.add('technicalSpecs');
+  if (input.procedure && candidate.procedure) critical.add('procedure');
   return [...critical];
 }
 function ciExtractClinicalAttributes(text) {
@@ -91,22 +97,34 @@ function ciExtractClinicalAttributes(text) {
     rawText,
     serviceType: '',
     clinicalDomain: '',
+    category: '',
+    procedure: '',
+    clinicalPurpose: '',
     purpose: '',
     bodySite: '',
+    anatomicalSite: '',
+    bodySystem: '',
     organSystem: '',
     modality: '',
     contrast: 'unknown',
+    contrastRoute: '',
     specimen: '',
     method: '',
+    testingMethod: '',
     laterality: '',
+    duration: '',
+    technicalSpecs: [],
     components: [],
+    treatmentComponents: [],
     population: '',
+    patientPopulation: '',
     qualifiers: [],
     exclusions: [],
     explicit: {},
     inferred: {},
     unknown: [],
-    uncertainties: []
+    uncertainties: [],
+    evidence: []
   };
   if (!normalized) {
     attributes.unknown = ['service description'];
@@ -172,19 +190,82 @@ function ciExtractClinicalAttributes(text) {
   if (attributes.modality === 'laboratory' || attributes.specimen || attributes.method) {
     attributes.serviceType = 'laboratory test';
     attributes.clinicalDomain = 'pathology';
-  } else if (attributes.modality && attributes.modality !== 'laboratory') {
+    attributes.category = 'laboratory';
+  } else if (['computed tomography','magnetic resonance imaging','ultrasound','radiograph'].includes(attributes.modality)) {
     attributes.serviceType = 'imaging study';
     attributes.clinicalDomain = 'radiology';
-  } else if (/consultation|visit|review/.test(normalized)) {
+    attributes.category = 'radiology';
+  } else if (/cardio|heart|ecg|ekg|echo/.test(normalized)) {
+    attributes.serviceType = 'cardiac study';
+    attributes.clinicalDomain = 'cardiology';
+    attributes.category = 'cardiology';
+  } else if (/consultation|visit|review|opd/.test(normalized)) {
     attributes.serviceType = 'consultation';
     attributes.clinicalDomain = 'clinical service';
+    attributes.category = 'consultation';
+  } else if (attributes.modality === 'laser' || attributes.modality === 'wax' || /laser therapy|wax therapy|waxing/.test(normalized)) {
+    attributes.serviceType = 'therapy';
+    attributes.clinicalDomain = 'therapy';
+    attributes.category = /laser/.test(normalized) ? 'dermatology' : 'dermatology';
+  } else if (/physiotherapy|physio|rehabilitation/.test(normalized)) {
+    attributes.serviceType = 'therapy';
+    attributes.clinicalDomain = 'physiotherapy';
+    attributes.category = 'physiotherapy';
+  } else if (/dental|dentist|tooth|teeth/.test(normalized)) {
+    attributes.serviceType = 'dental service';
+    attributes.clinicalDomain = 'dentistry';
+    attributes.category = 'dentistry';
+  } else if (/eye|ophthalm|vision|retina|cataract/.test(normalized)) {
+    attributes.serviceType = 'ophthalmic service';
+    attributes.clinicalDomain = 'ophthalmology';
+    attributes.category = 'ophthalmology';
+  } else if (/ent|ear|nose|throat|tonsil/.test(normalized)) {
+    attributes.serviceType = 'ent service';
+    attributes.clinicalDomain = 'otolaryngology';
+    attributes.category = 'ent';
+  } else if (/gynec|gynae|obstetric|pregnancy|uterus|ovary/.test(normalized)) {
+    attributes.serviceType = 'gynecological service';
+    attributes.clinicalDomain = 'gynecology';
+    attributes.category = 'gynecology';
+  } else if (/dermat|skin/.test(normalized)) {
+    attributes.serviceType = 'dermatological service';
+    attributes.clinicalDomain = 'dermatology';
+    attributes.category = 'dermatology';
+  } else if (/surgery|surgical|operation/.test(normalized)) {
+    attributes.serviceType = 'procedure';
+    attributes.clinicalDomain = 'surgery';
+    attributes.category = 'surgery';
   } else if (/biopsy/.test(normalized)) {
     attributes.serviceType = 'procedure';
     attributes.clinicalDomain = 'procedure';
+    attributes.category = 'pathology';
   } else {
     attributes.serviceType = 'service';
     attributes.clinicalDomain = 'unknown';
+    attributes.category = 'unknown';
   }
+
+  // Sync aliases for task-required attribute names.
+  attributes.anatomicalSite = attributes.bodySite;
+  attributes.testingMethod = attributes.method;
+  attributes.treatmentComponents = attributes.components.slice();
+  attributes.patientPopulation = attributes.population;
+  attributes.clinicalPurpose = attributes.purpose;
+  attributes.inferred = attributes.inferred || {};
+  if (attributes.bodySite) attributes.inferred.bodySite = attributes.bodySite;
+  if (attributes.modality) attributes.inferred.modality = attributes.modality;
+  if (attributes.contrast && attributes.contrast !== 'unknown') attributes.inferred.contrast = attributes.contrast;
+  // duration extraction
+  const durMatch = normalized.match(/\b(\d+)\s*(min|mins|minutes|hour|hours|hr|hrs|sec|seconds)\b/);
+  if (durMatch) { attributes.duration = durMatch[0]; attributes.explicit.duration = durMatch[0]; }
+  // technical specs
+  const techSpecs = [];
+  if (/contrast/.test(normalized)) techSpecs.push('contrast');
+  if (/doppler/.test(normalized)) techSpecs.push('doppler');
+  if (techSpecs.length) { attributes.technicalSpecs = techSpecs; attributes.explicit.technicalSpecs = techSpecs.slice(); }
+  // procedure
+  attributes.procedure = attributes.serviceType || '';
+  attributes.explicit.procedure = attributes.procedure;
 
   const unknown = [];
   if (!attributes.modality) unknown.push('modality');
@@ -202,7 +283,7 @@ function ciAssessClinicalEquivalence(input, candidate) {
   const conflicts = [];
   const criticalConflicts = [];
   const critical = ciCriticalAttributesFor(input, candidate);
-  const simpleAttrs = ['modality','bodySite','contrast','specimen','method','laterality','population','purpose'];
+  const simpleAttrs = ['modality','bodySite','contrast','specimen','method','laterality','population','purpose','category','procedure','duration'];
   for (const attr of simpleAttrs) {
     const a = input[attr];
     const b = candidate[attr];
@@ -217,6 +298,17 @@ function ciAssessClinicalEquivalence(input, candidate) {
     } else if (aPresent || bPresent) {
       missing.push(attr + ' missing in ' + (aPresent ? 'candidate' : 'input'));
     } else if (critical.includes(attr)) {
+function ciSynonyms(term) {
+  const t = ciNorm(term);
+  if (typeof ClinicalKnowledgeBase !== 'undefined' && ClinicalKnowledgeBase.synonyms) {
+    for (const [k, v] of Object.entries(ClinicalKnowledgeBase.synonyms)) {
+      if (ciNorm(k) === t) return v.slice();
+      if (v.map(ciNorm).includes(t)) return [k].concat(v.filter(x => ciNorm(x) !== t));
+    }
+  }
+  return [];
+}
+if (typeof globalThis !== 'undefined') globalThis.ciSynonyms = ciSynonyms;
       missing.push(attr + ' unknown for both input and candidate');
     }
   }
@@ -233,6 +325,23 @@ function ciAssessClinicalEquivalence(input, candidate) {
     missing.push('components missing in ' + ((input.components && input.components.length) ? 'candidate' : 'input'));
   } else if (critical.includes('components')) {
     missing.push('components unknown for both input and candidate');
+  }
+  // technicalSpecs comparison
+  const its = Array.isArray(input.technicalSpecs) ? input.technicalSpecs : [];
+  const cts = Array.isArray(candidate.technicalSpecs) ? candidate.technicalSpecs : [];
+  if (its.length && cts.length) {
+    const a = new Set(its.map(ciNorm));
+    const b = new Set(cts.map(ciNorm));
+    const same = a.size === b.size && [...a].every(v => b.has(v));
+    if (same) matching.push('technicalSpecs');
+    else {
+      conflicts.push('technicalSpecs: ' + its.join(', ') + ' vs ' + cts.join(', '));
+      if (critical.includes('technicalSpecs')) criticalConflicts.push('technicalSpecs differ (' + its.join(', ') + ' vs ' + cts.join(', ') + ')');
+    }
+  } else if (its.length || cts.length) {
+    missing.push('technicalSpecs missing in ' + (its.length ? 'candidate' : 'input'));
+  } else if (critical.includes('technicalSpecs')) {
+    missing.push('technicalSpecs unknown for both input and candidate');
   }
   const compatible = conflicts.length === 0;
   const candidatePresent = !!candidate.rawText;
@@ -266,9 +375,9 @@ function ciValidateClinicalAttributes(attrs) {
     errors.push('Clinical attributes must be an object.');
     return { valid: false, errors };
   }
-  const required = ['rawText','serviceType','clinicalDomain','purpose','bodySite','bodySystem','modality','contrast','contrastRoute','specimen','method','laterality','components','population','exclusions','unknown','uncertainties','explicit','inferred','evidence'];
+  const required = ['rawText','serviceType','clinicalDomain','category','procedure','clinicalPurpose','purpose','bodySite','anatomicalSite','bodySystem','modality','contrast','contrastRoute','specimen','method','testingMethod','laterality','duration','technicalSpecs','components','treatmentComponents','population','patientPopulation','exclusions','unknown','uncertainties','explicit','inferred','evidence'];
   for (const field of required) if (!(field in attrs)) errors.push('Missing required field: ' + field);
-  const typeChecks = { rawText: 'string', serviceType: 'string', clinicalDomain: 'string', purpose: 'string', bodySite: 'string', bodySystem: 'string', modality: 'string', contrast: 'string', contrastRoute: 'string', specimen: 'string', method: 'string', laterality: 'string', components: 'array', population: 'string', exclusions: 'array', unknown: 'array', uncertainties: 'array', explicit: 'object', inferred: 'object', evidence: 'array' };
+  const typeChecks = { rawText: 'string', serviceType: 'string', clinicalDomain: 'string', category: 'string', procedure: 'string', clinicalPurpose: 'string', purpose: 'string', bodySite: 'string', anatomicalSite: 'string', bodySystem: 'string', modality: 'string', contrast: 'string', contrastRoute: 'string', specimen: 'string', method: 'string', testingMethod: 'string', laterality: 'string', duration: 'string', technicalSpecs: 'array', components: 'array', treatmentComponents: 'array', population: 'string', patientPopulation: 'string', exclusions: 'array', unknown: 'array', uncertainties: 'array', explicit: 'object', inferred: 'object', evidence: 'array' };
   for (const [field, type] of Object.entries(typeChecks)) {
     if (!(field in attrs)) continue;
     const value = attrs[field];

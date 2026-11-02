@@ -2,7 +2,15 @@
 'use strict';
 
 try {
-  if (typeof importScripts === 'function') importScripts('clinical-interpreter.js');
+  if (typeof importScripts === 'function') {
+    importScripts('clinical-interpreter.js');
+    try { importScripts('clinical-knowledge-base.js'); } catch (e) {}
+    try { importScripts('clinical-conflict-detector.js'); } catch (e) {}
+    try { importScripts('medical-dataset-manager.js'); } catch (e) {}
+    try { importScripts('clinical-training-pipeline.js'); } catch (e) {}
+    try { importScripts('clinical-evaluation.js'); } catch (e) {}
+    try { importScripts('reviewer-feedback.js'); } catch (e) {}
+  }
 } catch (error) {
   // Fall back to the clinical helpers bundled below only when the separate module cannot be loaded.
 }

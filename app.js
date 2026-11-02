@@ -766,12 +766,10 @@ const OUTPUT_KEYS_BY_HEADER = Object.fromEntries(Object.entries(OUTPUT_HEADERS).
     const clientHeaders = [
       'Original Service Name',
       'Suggested Code to Select',
-      'Suggested Service Name',
+      'Suggested Standard Service',
       'Group',
       'Subgroup',
-      'Vendor',
-      'Charges',
-      'Match Percentage',
+      'Clinical Match Percentage',
       'Review Status',
       'Recommended Next Action'
     ];
@@ -809,8 +807,6 @@ const OUTPUT_KEYS_BY_HEADER = Object.fromEntries(Object.entries(OUTPUT_HEADERS).
         sanitizeExcelText(hasCandidate ? suggestedStandardName : ''),
         sanitizeExcelText(hasCandidate ? standardGroup : ''),
         sanitizeExcelText(hasCandidate ? standardSubgroup : ''),
-        sanitizeExcelText(standardVendor),
-        sanitizeExcelText(standardCharges),
         score,
         sanitizeExcelText(matchStatus),
         sanitizeExcelText(nextAction)
@@ -823,8 +819,6 @@ const OUTPUT_KEYS_BY_HEADER = Object.fromEntries(Object.entries(OUTPUT_HEADERS).
       { wch: 40 },
       { wch: 20 },
       { wch: 20 },
-      { wch: 28 },
-      { wch: 22 },
       { wch: 12 },
       { wch: 28 },
       { wch: 46 }
