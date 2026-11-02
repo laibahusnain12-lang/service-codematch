@@ -1,0 +1,631 @@
+{
+  "records": [
+    {
+      "id": "lab-001",
+      "serviceTerm": "Urine Culture",
+      "standardName": "Urine Culture",
+      "standardCode": "LAB-UR-001",
+      "category": "laboratory",
+      "verified": true,
+      "synonyms": [
+        "urine culture",
+        "culture urine"
+      ],
+      "abbreviations": [
+        "UC"
+      ],
+      "procedure": "Microbial culture",
+      "specimen": "urine",
+      "bodySite": "urinary tract",
+      "modality": "microbiology",
+      "method": "culture",
+      "sourceRef": "verified-clinical-reviews",
+      "source": "verified clinical service catalogues"
+    },
+    {
+      "id": "lab-002",
+      "serviceTerm": "Urine Routine Examination",
+      "standardName": "Urine Routine Examination",
+      "standardCode": "LAB-UR-002",
+      "category": "laboratory",
+      "verified": true,
+      "synonyms": [
+        "urine routine",
+        "urine analysis",
+        "urinalysis"
+      ],
+      "abbreviations": [
+        "UA",
+        "URX"
+      ],
+      "procedure": "Urinalysis with dipstick",
+      "specimen": "urine",
+      "bodySite": "urinary tract",
+      "modality": "laboratory",
+      "method": "dipstick microscopy",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "lab-003",
+      "serviceTerm": "Blood Culture",
+      "standardName": "Blood Culture",
+      "standardCode": "LAB-BL-001",
+      "category": "laboratory",
+      "verified": true,
+      "synonyms": [
+        "blood culture"
+      ],
+      "abbreviations": [
+        "BC"
+      ],
+      "procedure": "Microbial culture",
+      "specimen": "blood",
+      "bodySite": "whole blood",
+      "modality": "microbiology",
+      "method": "aerobic anaerobic culture",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "lab-004",
+      "serviceTerm": "Complete Blood Count",
+      "standardName": "Complete Blood Count",
+      "standardCode": "LAB-BC-001",
+      "category": "laboratory",
+      "verified": true,
+      "synonyms": [
+        "CBC",
+        "hemogram"
+      ],
+      "abbreviations": [
+        "CBC"
+      ],
+      "procedure": "Hematology cell counts",
+      "specimen": "blood",
+      "bodySite": "whole blood",
+      "modality": "laboratory",
+      "method": "automated hematology",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "lab-005",
+      "serviceTerm": "Lipid Profile",
+      "standardName": "Lipid Profile",
+      "standardCode": "LAB-LP-001",
+      "category": "laboratory",
+      "verified": true,
+      "synonyms": [
+        "lipid panel",
+        "cholesterol panel"
+      ],
+      "abbreviations": [
+        "LP"
+      ],
+      "procedure": "Serum chemistry",
+      "specimen": "serum",
+      "bodySite": "blood",
+      "modality": "laboratory",
+      "method": "enzymatic colorimetric",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-001",
+      "serviceTerm": "CT Chest",
+      "standardName": "Computed Tomography Chest",
+      "standardCode": "RAD-CT-001",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "CT scan",
+        "computed tomography"
+      ],
+      "abbreviations": [
+        "CT"
+      ],
+      "procedure": "Cross-sectional imaging",
+      "specimen": "none",
+      "bodySite": "chest",
+      "modality": "computed tomography",
+      "method": "multi-detector CT",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-002",
+      "serviceTerm": "CT Chest with Contrast",
+      "standardName": "Computed Tomography Chest With Contrast",
+      "standardCode": "RAD-CT-002",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "CT Chest with contrast",
+        "CECT chest"
+      ],
+      "abbreviations": [
+        "CT C+"
+      ],
+      "procedure": "Contrast-enhanced cross-sectional imaging",
+      "specimen": "none",
+      "bodySite": "chest",
+      "modality": "computed tomography",
+      "method": "contrast-enhanced CT",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-003",
+      "serviceTerm": "CT Chest without Contrast",
+      "standardName": "Computed Tomography Chest Without Contrast",
+      "standardCode": "RAD-CT-003",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "CT Chest without contrast",
+        "non-contrast CT chest"
+      ],
+      "abbreviations": [
+        "CT C-"
+      ],
+      "procedure": "Non-contrast cross-sectional imaging",
+      "specimen": "none",
+      "bodySite": "chest",
+      "modality": "computed tomography",
+      "method": "non-contrast CT",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-004",
+      "serviceTerm": "MRI Brain",
+      "standardName": "Magnetic Resonance Imaging Brain",
+      "standardCode": "RAD-MR-001",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "MRI scan",
+        "MR imaging"
+      ],
+      "abbreviations": [
+        "MRI",
+        "MR"
+      ],
+      "procedure": "Magnetic resonance neuroimaging",
+      "specimen": "none",
+      "bodySite": "brain",
+      "modality": "magnetic resonance imaging",
+      "method": "multi-sequence MRI",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-005",
+      "serviceTerm": "Chest X Ray",
+      "standardName": "Chest Radiograph",
+      "standardCode": "RAD-XR-001",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "X ray chest",
+        "chest x-ray",
+        "chest radiograph"
+      ],
+      "abbreviations": [
+        "CXR",
+        "XRay"
+      ],
+      "procedure": "Projectional radiography",
+      "specimen": "none",
+      "bodySite": "chest",
+      "modality": "radiography",
+      "method": "posteroanterior",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-006",
+      "serviceTerm": "Echocardiography",
+      "standardName": "Echocardiogram",
+      "standardCode": "RAD-EC-001",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "echo",
+        "cardiac ultrasound"
+      ],
+      "abbreviations": [
+        "ECHO"
+      ],
+      "procedure": "Cardiac ultrasound",
+      "specimen": "none",
+      "bodySite": "heart",
+      "modality": "echocardiography",
+      "method": "transthoracic echo",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "rad-007",
+      "serviceTerm": "Electrocardiogram",
+      "standardName": "Electrocardiogram",
+      "standardCode": "RAD-EC-002",
+      "category": "radiology",
+      "verified": true,
+      "synonyms": [
+        "ECG",
+        "EKG",
+        "electrocardiograph"
+      ],
+      "abbreviations": [
+        "ECG",
+        "EKG"
+      ],
+      "procedure": "Cardiac electrical recording",
+      "specimen": "none",
+      "bodySite": "heart",
+      "modality": "electrocardiogram",
+      "method": "12-lead ECG",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "card-001",
+      "serviceTerm": "Cardiac Stress Test",
+      "standardName": "Cardiac Exercise Stress Test",
+      "standardCode": "CARD-SX-001",
+      "category": "cardiology",
+      "verified": true,
+      "synonyms": [
+        "stress test",
+        "exercise treadmill test"
+      ],
+      "abbreviations": [
+        "EST",
+        "TMT"
+      ],
+      "procedure": "Exercise cardiac functional testing",
+      "specimen": "none",
+      "bodySite": "heart",
+      "modality": "cardiology",
+      "method": "treadmill Bruce protocol",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "card-002",
+      "serviceTerm": "24 Hour Holter Monitor",
+      "standardName": "24-Hour Holter Monitor",
+      "standardCode": "CARD-HR-001",
+      "category": "cardiology",
+      "verified": true,
+      "synonyms": [
+        "Holter monitor"
+      ],
+      "abbreviations": [
+        "HOL"
+      ],
+      "procedure": "Ambulatory ECG monitoring",
+      "specimen": "none",
+      "bodySite": "heart",
+      "modality": "electrocardiogram",
+      "method": "continuous 24h ECG",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "card-003",
+      "serviceTerm": "Echocardiography Doppler",
+      "standardName": "Echocardiography With Doppler",
+      "standardCode": "CARD-EC-001",
+      "category": "cardiology",
+      "verified": true,
+      "synonyms": [
+        "echo Doppler",
+        "Doppler echo"
+      ],
+      "abbreviations": [
+        "ECHO DOP"
+      ],
+      "procedure": "Doppler echocardiography",
+      "specimen": "none",
+      "bodySite": "heart",
+      "modality": "echocardiography",
+      "method": "color Doppler flow imaging",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "surg-001",
+      "serviceTerm": "Laparoscopic Cholecystectomy",
+      "standardName": "Laparoscopic Cholecystectomy",
+      "standardCode": "SURG-LC-001",
+      "category": "surgery",
+      "verified": true,
+      "synonyms": [
+        "lap chole",
+        "keyhole gallbladder removal"
+      ],
+      "abbreviations": [
+        "LC"
+      ],
+      "procedure": "Minimally invasive gallbladder removal",
+      "specimen": "gallbladder",
+      "bodySite": "abdomen",
+      "modality": "surgery",
+      "method": "4-port laparoscopic",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "surg-002",
+      "serviceTerm": "Open Cholecystectomy",
+      "standardName": "Open Cholecystectomy",
+      "standardCode": "SURG-OC-001",
+      "category": "surgery",
+      "verified": true,
+      "synonyms": [
+        "open gallbladder removal"
+      ],
+      "abbreviations": [
+        "OC"
+      ],
+      "procedure": "Open gallbladder removal",
+      "specimen": "gallbladder",
+      "bodySite": "abdomen",
+      "modality": "surgery",
+      "method": "open surgical",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "surg-003",
+      "serviceTerm": "Appendectomy",
+      "standardName": "Appendectomy",
+      "standardCode": "SURG-AP-001",
+      "category": "surgery",
+      "verified": true,
+      "synonyms": [
+        "appendicectomy"
+      ],
+      "abbreviations": [
+        "APP"
+      ],
+      "procedure": "Appendix removal",
+      "specimen": "appendix",
+      "bodySite": "right lower quadrant",
+      "modality": "surgery",
+      "method": "laparoscopic",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "phys-001",
+      "serviceTerm": "Laser Therapy",
+      "standardName": "Low-Level Laser Therapy",
+      "standardCode": "PHYS-LL-001",
+      "category": "physiotherapy",
+      "verified": true,
+      "synonyms": [
+        "laser therapy",
+        "LLLT"
+      ],
+      "abbreviations": [
+        "LLLT"
+      ],
+      "procedure": "Photobiomodulation",
+      "specimen": "none",
+      "bodySite": "musculoskeletal",
+      "modality": "physiotherapy",
+      "method": "near-infrared laser 600-1100nm",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "phys-002",
+      "serviceTerm": "Wax Therapy",
+      "standardName": "Clinical Waxing",
+      "standardCode": "PHYS-WX-001",
+      "category": "physiotherapy",
+      "verified": true,
+      "synonyms": [
+        "wax therapy",
+        "hair removal waxing"
+      ],
+      "abbreviations": [
+        "WX"
+      ],
+      "procedure": "Epilation",
+      "specimen": "none",
+      "bodySite": "skin",
+      "modality": "physiotherapy",
+      "method": "hot wax epilation",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "path-001",
+      "serviceTerm": "Biopsy",
+      "standardName": "Tissue Biopsy",
+      "standardCode": "PATH-BX-001",
+      "category": "pathology",
+      "verified": true,
+      "synonyms": [
+        "biopsy"
+      ],
+      "abbreviations": [
+        "BX"
+      ],
+      "procedure": "Tissue sampling",
+      "specimen": "tissue",
+      "bodySite": "variable",
+      "modality": "pathology",
+      "method": "excisional/core needle",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "path-002",
+      "serviceTerm": "Fine Needle Aspiration",
+      "standardName": "Fine Needle Aspiration Cytology",
+      "standardCode": "PATH-FNA-001",
+      "category": "pathology",
+      "verified": true,
+      "synonyms": [
+        "FNAC"
+      ],
+      "abbreviations": [
+        "FNAC",
+        "FNA"
+      ],
+      "procedure": "Cytology sampling",
+      "specimen": "cells",
+      "bodySite": "variable",
+      "modality": "pathology",
+      "method": "fine needle aspiration",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "path-003",
+      "serviceTerm": "Complete Blood Count",
+      "standardName": "Complete Blood Count",
+      "standardCode": "PATH-BC-001",
+      "category": "pathology",
+      "verified": true,
+      "synonyms": [
+        "CBC"
+      ],
+      "abbreviations": [
+        "CBC"
+      ],
+      "procedure": "Hematology cell counts",
+      "specimen": "blood",
+      "bodySite": "whole blood",
+      "modality": "pathology",
+      "method": "automated hematology",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "orth-001",
+      "serviceTerm": "OCT Macula",
+      "standardName": "Optical Coherence Tomography Macula",
+      "standardCode": "OPH-OCT-001",
+      "category": "ophthalmology",
+      "verified": true,
+      "synonyms": [
+        "OCT",
+        "OCT mac"
+      ],
+      "abbreviations": [
+        "OCT"
+      ],
+      "procedure": "Retinal cross-sectional imaging",
+      "specimen": "none",
+      "bodySite": "retina",
+      "modality": "optical coherence tomography",
+      "method": "spectral-domain OCT",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "opth-002",
+      "serviceTerm": "Fundus Photography",
+      "standardName": "Retinal Fundus Photography",
+      "standardCode": "OPH-FU-001",
+      "category": "ophthalmology",
+      "verified": true,
+      "synonyms": [
+        "fundus copy"
+      ],
+      "abbreviations": [
+        "FN"
+      ],
+      "procedure": "Retinal surface imaging",
+      "specimen": "none",
+      "bodySite": "retina",
+      "modality": "ophthalmology",
+      "method": "color fundus photography",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "ent-001",
+      "serviceTerm": "Endoscopy Nasal",
+      "standardName": "Nasal Endoscopy",
+      "standardCode": "ENT-ES-001",
+      "category": "ent",
+      "verified": true,
+      "synonyms": [
+        "nasal endoscopy"
+      ],
+      "abbreviations": [
+        "NOSE"
+      ],
+      "procedure": "Upper airway endoscopy",
+      "specimen": "none",
+      "bodySite": "nasal cavity",
+      "modality": "ent",
+      "method": "flexible nasal endoscopy",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "dent-001",
+      "serviceTerm": "OPG",
+      "standardName": "Orthopantomogram",
+      "standardCode": "DENT-OPG-001",
+      "category": "dentistry",
+      "verified": true,
+      "synonyms": [
+        "OPG"
+      ],
+      "abbreviations": [
+        "OPG"
+      ],
+      "procedure": "Panoramic dental radiography",
+      "specimen": "none",
+      "bodySite": "jaw",
+      "modality": "radiography",
+      "method": "panoramic dental X ray",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "dent-002",
+      "serviceTerm": "Bitewing X Ray",
+      "standardName": "Bitewing Radiograph",
+      "standardCode": "DENT-BW-001",
+      "category": "dentistry",
+      "verified": true,
+      "synonyms": [
+        "bitewing"
+      ],
+      "abbreviations": [
+        "BW"
+      ],
+      "procedure": "Dental interproximal radiography",
+      "specimen": "none",
+      "bodySite": "jaw",
+      "modality": "radiography",
+      "method": "bitewing dental X ray",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "dent-003",
+      "serviceTerm": "Dental Laser",
+      "standardName": "Dental Soft Tissue Laser",
+      "standardCode": "DENT-LAS-001",
+      "category": "dentistry",
+      "verified": true,
+      "synonyms": [
+        "dental laser"
+      ],
+      "abbreviations": [
+        "LAS"
+      ],
+      "procedure": "Laser soft tissue dentistry",
+      "specimen": "none",
+      "bodySite": "oral",
+      "modality": "dentistry",
+      "method": "dental soft tissue laser",
+      "sourceRef": "verified-clinical-reviews"
+    },
+    {
+      "id": "Derm-001",
+      "serviceTerm": "Acne Treatment Chemical Peel",
+      "standardName": "Chemical Peel for Acne",
+      "standardCode": "DERM-CP-001",
+      "category": "dermatology",
+      "verified": true,
+      "synonyms": [
+        "chemical peel"
+      ],
+      "abbreviations": [
+        "CP"
+      ],
+      "procedure": "Chemical exfoliation",
+      "specimen": "none",
+      "bodySite": "skin",
+      "modality": "dermatology",
+      "method": "trichloroacetic acid peel",
+      "sourceRef": "verified-clinical-reviews"
+    }
+  ]
+}

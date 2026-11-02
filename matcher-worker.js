@@ -10,6 +10,7 @@ try {
     try { importScripts('clinical-training-pipeline.js'); } catch (e) {}
     try { importScripts('clinical-evaluation.js'); } catch (e) {}
     try { importScripts('reviewer-feedback.js'); } catch (e) {}
+    try { importScripts('clinical-trained-model.js'); } catch (e) {}
   }
 } catch (error) {
   // Fall back to the clinical helpers bundled below only when the separate module cannot be loaded.
@@ -1319,6 +1320,37 @@ function enrichResultWithClinical(result, rawName, standardizedName, ctx) {
     result['Clinical Compatibility'] = 'Not evaluated';
   }
 
+  // Trained model scoring: clinical equivalence probability from the hybrid model.
+  // Used as an additional ranking signal; clinical conflict rules still veto unsafe matches.
+  let modelScore = 0;
+  let modelEvidence = 'Trained model not available';
+  if (typeof ClinicalTrainedModel !== 'undefined' && candidateText) {
+    try {
+      const inputForModel = inputAttrs || {};
+      const candForModel = candidateAttrs || {};
+      modelScore = ClinicalTrainedModel.score(inputForModel, candForModel);
+      modelEvidence = 'Trained model score ' + (modelScore * 100).toFixed(1) + '% clinical equivalence';
+    } catch (e) {
+      modelScore = 0;
+      modelEvidence = 'Trained model scoring unavailable';
+    }
+  }
+  result['Trained Model Score'] = modelScore;
+  result['Trained Model Evidence'] = modelEvidence;
+
+  // Adjust match score using trained model as a ranking signal (never overrides conflict vetoes).
+  const currentScore = Number(result['Auto Match Score']) || 0;
+  if (candidateText && modelScore > 0) {
+    const adjusted = Math.round((currentScore * 0.6 + modelScore * 100 * 0.4) * 100) / 100;
+    if (adjusted > currentScore && result['Auto Match Score'] < 95) {
+      result['Auto Match Score'] = Math.min(adjusted, 94);
+      result['Auto Match Method'] = result['Auto Match Method'] + '; trained clinical model corroboration';
+    } else if (adjusted < currentScore && modelScore < 0.3) {
+      result['Auto Match Score'] = Math.max(adjusted, 0);
+      result['Auto Match Method'] = result['Auto Match Method'] + '; trained clinical model low confidence';
+    }
+  }
+
   const status = String(result['Auto Match Status / Review Required'] || '').toUpperCase();
   const candidateCode = String(result['Auto Candidate Service Code'] || '').trim();
   let codeSystem = 'Unknown (not specified in reference catalogue)';
@@ -1369,8 +1401,8 @@ function enrichResultWithClinical(result, rawName, standardizedName, ctx) {
   } else {
     result['Decision Reason'] = final.reason || 'Requires human review';
   }
-  result['Semantic Similarity'] = 'Not evaluated (no embedding model configured)';
-  result['Clinical AI/Model Version'] = 'clinical-rules-v3';
+  result['Semantic Similarity'] = 'Trained clinical hybrid model (logistic regression over clinical attributes)';
+  result['Clinical AI/Model Version'] = 'clinical-hybrid-v1';
   return result;
 }
 

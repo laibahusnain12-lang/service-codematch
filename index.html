@@ -134,52 +134,6 @@
       </section>
 
 
-      <section class="panel" id="dataset-panel">
-        <div class="panel-head"><div class="step-label"><span>04</span> MEDICAL DATASET MANAGEMENT</div></div>
-        <h2>Medical datasets</h2>
-        <p class="panel-copy">Import verified medical terminology and equivalence examples (CSV, JSON, XLSX). Files stay on this device.</p>
-        <label class="file-drop" for="dataset-file" id="dataset-drop">
-          <span class="drop-title">Choose dataset file</span>
-          <span class="drop-hint">CSV, JSON or XLSX</span>
-          <span class="file-name" id="dataset-file-name">No file selected</span>
-        </label>
-        <input class="file-input" type="file" id="dataset-file" accept=".csv,.json,.xlsx,.xls" />
-        <div class="field-row">
-          <label for="dataset-name">Dataset name</label>
-          <input id="dataset-name" type="text" value="Medical dataset" />
-        </div>
-        <div class="field-row">
-          <label for="dataset-source">Source</label>
-          <input id="dataset-source" type="text" value="internal" />
-        </div>
-        <div class="field-row">
-          <label for="dataset-version">Version</label>
-          <input id="dataset-version" type="text" value="1.0" />
-        </div>
-        <div class="field-row">
-          <label for="dataset-license">License</label>
-          <input id="dataset-license" type="text" value="unspecified" />
-        </div>
-        <div class="field-row">
-          <label for="dataset-verification">Verification status</label>
-          <select id="dataset-verification">
-            <option value="unverified">Unverified</option>
-            <option value="partially_verified">Partially verified</option>
-            <option value="verified">Verified</option>
-          </select>
-        </div>
-        <div class="button-row">
-          <button class="button button-secondary" id="dataset-preview-btn">Preview</button>
-          <button class="button button-secondary" id="dataset-validate-btn">Validate</button>
-          <button class="button button-primary" id="dataset-import-btn">Import verified data</button>
-        </div>
-        <div class="inline-message" id="dataset-message" role="status" aria-live="polite"></div>
-        <div id="dataset-preview" class="dataset-preview" hidden></div>
-        <h3>Dataset versions</h3>
-        <ul id="dataset-versions"></ul>
-        <h3>Training / evaluation status</h3>
-        <div id="training-status">No training run completed. Only verified examples may be used as trusted labels.</div>
-      </section>
     </main>
 
     <footer><span>Service Code Match Portal</span><span>Client workspace</span></footer>
@@ -191,11 +145,8 @@
   <script src="vendor-validator.js"></script>
   <script src="clinical-knowledge-base.js"></script>
   <script src="clinical-conflict-detector.js"></script>
-  <script src="medical-dataset-manager.js"></script>
-  <script src="clinical-training-pipeline.js"></script>
-  <script src="clinical-evaluation.js"></script>
   <script src="reviewer-feedback.js"></script>
-  <script src="dataset-ui.js"></script>
+  <script src="clinical-trained-model.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
