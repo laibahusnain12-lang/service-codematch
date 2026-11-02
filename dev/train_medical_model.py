@@ -1,1 +1,0 @@
-# medical training model
